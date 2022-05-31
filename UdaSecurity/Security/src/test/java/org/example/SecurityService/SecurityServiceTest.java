@@ -67,7 +67,7 @@ public class SecurityServiceTest {
       when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.NO_ALARM);
       securityService.changeSensorActivationStatus(sensor,Boolean.TRUE);
       verify(securityRepository,times(1)).setAlarmStatus(AlarmStatus.PENDING_ALARM);
-      //Assertions.assertEquals(AlarmStatus.PENDING_ALARM,securityService.getAlarmStatus(),"If alarm is armed and a sensor becomes activated,  the system should  at pending alarm status ");
+
     }
     /*Test 2:
     If alarm is armed and a sensor becomes activated and the system is already pending alarm, set the alarm status to alarm.*/
