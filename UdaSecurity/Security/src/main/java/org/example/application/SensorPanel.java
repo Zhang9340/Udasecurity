@@ -1,6 +1,7 @@
 package org.example.application;
 
 
+import org.example.data.AlarmStatus;
 import org.example.data.Sensor;
 import org.example.data.SensorType;
 import net.miginfocom.swing.MigLayout;
@@ -13,7 +14,7 @@ import javax.swing.*;
  * Panel that allows users to add sensors to their system. Sensors may be
  * manually set to "active" and "inactive" to test the system.
  */
-public class SensorPanel extends JPanel {
+public class SensorPanel extends JPanel implements StatusListener{
 
     private SecurityService securityService;
 
@@ -31,8 +32,10 @@ public class SensorPanel extends JPanel {
         super();
         setLayout(new MigLayout());
         this.securityService = securityService;
+        securityService.addStatusListener(this);
 
         panelLabel.setFont(StyleService.HEADING_FONT);
+
         addNewSensorButton.addActionListener(e ->
                 addSensor(new Sensor(newSensorNameField.getText(),
                         SensorType.valueOf(newSensorTypeDropdown.getSelectedItem().toString()))));
@@ -116,6 +119,17 @@ public class SensorPanel extends JPanel {
      */
     private void removeSensor(Sensor sensor) {
         securityService.removeSensor(sensor);
+        updateSensorList(sensorListPanel);
+    }
+
+    @Override
+    public void catDetected(boolean cat){}
+
+    @Override
+    public void notify(AlarmStatus alarmStatus){}
+
+    @Override
+    public void sensorStatusChanged(){
         updateSensorList(sensorListPanel);
     }
 }
